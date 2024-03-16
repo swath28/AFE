@@ -1,0 +1,50 @@
+package player;
+import java.util.Scanner;
+
+
+public class Player {
+      public String name;
+       int age;
+       String email;
+       String address;
+  public void setName(String name){
+     this.name=name;
+  }
+  public void setNameAge(String name,int age){
+     this.name=name;
+     this.age=age;
+ }
+  public void setPlayerDetails(String name,int age,String address,String email){
+      this.name=name;
+      this.age=age;
+      this.email=email;
+      this.address=address;
+  }
+  public String getName(){
+     return this.name;
+  }
+  public int getAge(){
+     return this.age;
+ }
+  public void getPlayerDetails(){
+     System.out.println("Name: "+this.name);
+     System.out.println("Age: "+this.age);
+    System.out.println("Email: "+this.email);
+     System.out.println("Address: "+this.address);
+
+  }
+  public  void setPlayerDetailsfromUser(Player p){
+           Scanner scn=new Scanner(System.in);
+            System.out.println("Enter name:");
+             String name=scn.nextLine();
+             System.out.println("Enter email:");
+             String email=scn.nextLine();
+             System.out.println("Enter address: ");
+            String address=scn.nextLine();
+            System.out.println("Enter age:");
+             int age=scn.nextInt();
+        
+           p.setPlayerDetails(name,age,address,email);
+      
+     }
+}
