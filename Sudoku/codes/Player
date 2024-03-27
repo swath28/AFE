@@ -1,0 +1,28 @@
+package player;
+
+public class Player {
+    String name;
+    int age;
+    String emailId;
+    String address;
+   
+    public Player(String name){
+        this.name=name;
+    }
+    public void setPlayerDetails(String name,int age,String address,String emailId){
+        this.name=name;
+        this.age=age;
+        this.address=address;
+        this.emailId=emailId;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public void getPlayerDetails(){
+        System.out.println("Player name: "+this.name);
+        System.out.println("Age: "+this.age);
+        System.out.println("Address: "+this.address);
+        System.out.println("EmailId: "+this.emailId);
+    }
+    
+}
