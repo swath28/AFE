@@ -1,0 +1,10 @@
+import board.Board;
+import game.Game; 
+public class App {
+    public static void main(String[] args) throws Exception {
+     
+       Board b=new Board(4);
+       Game game=new Game(b);
+       game.play();
+    }
+}
