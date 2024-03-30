@@ -1,0 +1,50 @@
+package game;
+import board.Board;
+
+public class Game {
+   Board board;
+   
+public Game(Board board){
+      this.board=board;   
+   }
+
+public void play(){
+    
+     if(board.n<4){
+        System.out.println("Please enter a valid size");
+     return;
+      }
+       helpSeeker(board.matrix,0);
+     
+     
+} 
+  public void helpSeeker(char matrix[][],int row){
+     
+    if(row==board.n) {
+        board.printBoard();
+          return; 
+     }
+     for(int col=0;col<board.n;col++){
+        if(isSafe(board,row,col)==true)
+             matrix[row][col]='Q';
+         helpSeeker(board.matrix,row+1);
+           matrix[row][col]='-';
+     }
+  }
+
+  private Boolean isSafe(Board board,int row,int col){
+      
+     for(int i=row-1,j=col-1;i>=0&&j>=0;i--,j--){
+         if(board.matrix[i][j]=='Q') return false;
+     }
+     for(int i=row-1,j=col+1;i>=0 && j<board.n;i--,j++){
+        if(board.matrix[i][j]=='Q') return false;
+    }
+     for(int i=row-1;i>=0;i--){
+        if(board.matrix[i][col]=='Q') return false;
+       }
+    
+      
+     return true;
+  }
+}
