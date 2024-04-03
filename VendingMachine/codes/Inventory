@@ -1,0 +1,61 @@
+package inventory;
+import item.Item;
+import item.ItemShelf;
+
+public class Inventory {
+     public ItemShelf[] inventory;
+  
+  public Inventory(int n){
+      inventory=new ItemShelf[n];
+        initialInventory();
+  }
+   public ItemShelf[] getInventory(){
+      return this.inventory;
+   }
+   public void setInventory(ItemShelf[] inventory){
+        this.inventory=inventory;
+   }
+   public void initialInventory(){
+        int startCode=101;
+         for(int i=0;i<inventory.length;i++){
+             ItemShelf itemShelf= new ItemShelf();
+             itemShelf.setItemCode(startCode);
+             itemShelf.setIsSold(true);
+             inventory[i]=itemShelf;
+              startCode++;
+         }
+   }
+    public void addItem(Item item,int itemCode){
+        for(ItemShelf shelf: inventory){
+          if(shelf.getItemCode()==itemCode){
+             if(shelf.getIsSold()==true){
+                shelf.setItem(item);
+               shelf.setIsSold(false);
+             }
+          }
+        }
+    }
+    public Item getItem(int itemCode){
+       for(ItemShelf shelf:inventory){
+          if(shelf.getItemCode()==itemCode){
+            if(shelf.getIsSold()==true){
+                System.out.println("Item sold out");
+                    return new Item();
+            }else{
+                return shelf.getItem();
+               
+            }
+          }
+       }System.out.println("Invalid item code");
+       return new Item();
+    }
+       public void updateItemSold(int itemCode){
+          for(ItemShelf shelf:inventory){
+              if(shelf.getItemCode()==itemCode){
+                 shelf.setIsSold(true);
+              }
+
+          }
+       } 
+       
+}
