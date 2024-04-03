@@ -30,7 +30,7 @@ public class VendingMachineState {
                 }
              else{
                 getChange(item.getPrice(),paidByUser);
-                dispenceProduct(vendingMachine, itemCode);
+                dispenseProduct(vendingMachine, itemCode);
                 return;
              }   
     }
@@ -44,9 +44,9 @@ public class VendingMachineState {
        vendingMachine.gInventory().addItem(item,itemCode);
 
     }
-    public void dispenceProduct(VendingMachine vendingMachine,int itemCode){
-        System.out.println("machine is in dispence state");
-        System.out.println("Product is dispened");
+    public void dispenseProduct(VendingMachine vendingMachine,int itemCode){
+        System.out.println("machine is in dispense state");
+        System.out.println("Product is dispensed");
         vendingMachine.gInventory().updateItemSold(itemCode);
         vendingMachine.sVendingMachineState(new VendingMachineState());
     }
