@@ -1,0 +1,56 @@
+package vendingMachine;
+
+import java.util.*;
+
+import coin.Coin;
+import item.Item;
+
+public class VendingMachineState {
+    public void vendingMachineSate(){
+        System.out.println("Idle state");
+    }
+    public void setForSelectingProduct(){
+        System.out.println("Machine has money in it");
+    }
+    public void insertCoin(Coin coin){
+        System.out.println("Inserted money");
+        System.out.println("Machine has money in it");
+    }
+    public void selectProduct(VendingMachine vendingMachine,int itemCode){
+        //select itemCode
+        //get coin
+        //compare price and coins
+          Item item=vendingMachine.gInventory().getItem(itemCode);
+           int paidByUser=0;
+            for(Coin coin: vendingMachine.gCoinList()){
+                    paidByUser+=coin.getValue();
+            }if(item.getPrice()>paidByUser){
+                      refundMoney(vendingMachine);
+                      return;
+                }
+             else{
+                getChange(item.getPrice(),paidByUser);
+                dispenceProduct(vendingMachine, itemCode);
+                return;
+             }   
+    }
+    public List<Coin> refundMoney(VendingMachine vendingMachine){
+        System.out.println("Returned the full amount in dispence tray");
+        vendingMachine.sVendingMachineState(new VendingMachineState());
+        return vendingMachine.gCoinList();
+    }
+    
+    public void updateInventory(VendingMachine vendingMachine,Item item,int itemCode){
+       vendingMachine.gInventory().addItem(item,itemCode);
+
+    }
+    public void dispenceProduct(VendingMachine vendingMachine,int itemCode){
+        System.out.println("machine is in dispence state");
+        System.out.println("Product is dispened");
+        vendingMachine.gInventory().updateItemSold(itemCode);
+        vendingMachine.sVendingMachineState(new VendingMachineState());
+    }
+    public void getChange(int itemPrice,int paidByUser){
+          System.out.println("Get the change from the dispence tray"+(itemPrice-paidByUser));
+    }
+}
