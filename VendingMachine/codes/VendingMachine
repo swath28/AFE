@@ -1,0 +1,30 @@
+package vendingMachine;
+
+import java.util.List;
+import coin.Coin;
+import inventory.Inventory;
+
+public class VendingMachine {
+    private VendingMachineState vendingMachineState;
+    private Inventory inventory;
+    private List<Coin> coinList;
+
+  public void sVendingMachineState(VendingMachineState vendingMachineState){
+      this.vendingMachineState=vendingMachineState;
+  }
+  public VendingMachineState gVendingMachineState(){
+     return this.vendingMachineState;
+  }
+  public void sInventory(Inventory inventory){
+       this.inventory=inventory;
+  }
+  public Inventory gInventory(){
+     return this.inventory;
+  }
+  public void sCoinList(List<Coin> coinList){
+      this.coinList=coinList;
+  }
+  public List<Coin> gCoinList(){
+    return this.coinList;
+  }
+}
