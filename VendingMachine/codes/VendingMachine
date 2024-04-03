@@ -8,8 +8,12 @@ public class VendingMachine {
     private VendingMachineState vendingMachineState;
     private Inventory inventory;
     private List<Coin> coinList;
-
-  public void sVendingMachineState(VendingMachineState vendingMachineState){
+  public VendingMachine(){
+       vendingMachineState=new VendingMachineState;
+       inventory=new Inventory;
+       coinList=new ArrayList<>();
+}
+public void sVendingMachineState(VendingMachineState vendingMachineState){
       this.vendingMachineState=vendingMachineState;
   }
   public VendingMachineState gVendingMachineState(){
