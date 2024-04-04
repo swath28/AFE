@@ -1,0 +1,112 @@
+package notePad;
+import java.time.LocalDateTime;
+import java.util.*;
+
+import action.Action;
+public class NotePad {
+   private int id;
+   private String[] notePad;
+   private Stack<Action> undoAction;
+   private Stack<Action> redoAction;
+   private Queue<String> clipBoard;
+   private int capacity=100; 
+   public NotePad(int capacity){
+      notePad=new String[capacity];
+        for(int i=0;i<capacity;i++){
+             notePad[i]=" ";
+        }
+         undoAction=new Stack<>();
+         redoAction=new Stack<>();
+         clipBoard=new LinkedList<>();
+   }
+   public void display(){
+      for(int i=0;i<this.capacity;i++){
+          System.out.println(notePad[i]);
+      }
+   }
+   public void display(int startingLine,int endingLine){
+        if(startingLine<0 || endingLine> capacity || startingLine>endingLine){
+           System.out.println("Please check starting as well as ending lines");
+            return;
+        }
+        for(int i=startingLine-1;i<endingLine;i++){
+            System.out.println(notePad[i]);
+        }
+   }
+   public void insert(int lineNo,String text){
+       if(lineNo>capacity){
+        System.out.println("Beyond capacity");
+          return;
+       }
+          notePad[lineNo-1]=text;
+          undoAction.push(new Action(id++,LocalDateTime.now(),lineNo,text,true));
+          display();
+   }
+ /*  public void insert(int startingLine,int endingLine){
+      if(endingLine>capacity){
+        System.out.println("Cant insert");
+        return;
+      }
+       for(int i=startingLine;i<=endingLine;i++){
+          insert(i);
+          display();
+       }
+   }  */
+   public void delete(int lineNo){
+      if(lineNo>capacity || notePad[lineNo-1]==" "){
+        System.out.println("Enter valid lineNo");
+        return;
+      }
+      if(notePad[lineNo-1].isEmpty()){
+        return;
+      }
+      redoAction.push(new Action(id++, LocalDateTime.now(), lineNo, notePad[lineNo-1], false));
+      notePad[lineNo-1]=" ";
+      display();
+}
+    public void delete(int startingLine,int endingLine){
+        if(startingLine>endingLine || endingLine>capacity){
+            return;
+        }
+         for(int i=startingLine;i<=endingLine;i++){
+            delete(i);
+         }
+         display();
+    }
+    public void copy(int startingLine,int endingLine){
+         if(startingLine>endingLine || endingLine>this.capacity){
+            System.out.println("Enter valid lines");
+            return;
+         }  String copyText=" ";
+          for(int i=startingLine-1;i<endingLine;i++){
+             copyText+=notePad[i];
+          }
+           if(!copyText.isEmpty()) clipBoard.add(copyText);
+    }
+    public void paste(int lineNo){
+        if(this.clipBoard.isEmpty()){
+            System.out.println("Nothing to write");
+             return;
+        }
+          String text=clipBoard.peek();
+           insert(lineNo, text);
+    }
+    public void undo(){
+        if(this.undoAction.isEmpty()){
+            System.out.println("Nothing to undo");
+            return;
+        }
+         Action action=this.undoAction.peek();
+          this.undoAction.pop();
+         delete(action.getLineNo());
+    }
+    public void redo(){
+      if(this.redoAction.isEmpty()){
+         System.out.println("Nothing to redo");
+         return;
+      }
+        Action action=this.redoAction.peek();
+         redoAction.pop();
+           insert(action.getLineNo(),action.getText());
+    }
+}
