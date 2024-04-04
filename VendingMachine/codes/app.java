@@ -12,13 +12,13 @@ public class App {
           System.out.println("Display vendingMachine");
          displayInventory(vendingMachine);
           VendingMachineState vendingMachineState=new VendingMachineState();
-           vendingMachineState.insertCoin(Coin.FIFTY);
-           vendingMachineState.insertCoin(Coin.TWENTY);
-           vendingMachineState.selectProduct(vendingMachine, 102);
+           vendingMachineState.insertCoin(vendingMachine,Coin.FIFTY);
+          // vendingMachineState.insertCoin(Coin.TWENTY);
+           vendingMachineState.chooseProduct(vendingMachine, 101);
             displayInventory(vendingMachine);
     }
     private static void fillInventory(VendingMachine vendingMachine){
-          ItemShelf[] itemShelfSlots=vendingMachine.gInventory().getInventory();
+          ItemShelf[] itemShelfSlots=vendingMachine.getInventory().getInventory();
                  for(int i=0;i<itemShelfSlots.length;i++){
                     Item item=new Item();
                      if( i==0 || i==8){
@@ -51,9 +51,10 @@ public class App {
                  }
     }
     private static void displayInventory(VendingMachine vendingMachine){
-          ItemShelf[] itemShelfSlots=vendingMachine.gInventory().getInventory();
+          ItemShelf[] itemShelfSlots=vendingMachine.getInventory().getInventory();
            for(ItemShelf shelf:itemShelfSlots){
-             System.out.println("ItemCode: "+shelf.getItemCode()+" ItemType: "+shelf.getItem().getType()+" ItemPrice: "+shelf.getItem().getPrice()+" isAvailable: "+shelf.getIsSold());
+             System.out.println("ItemCode: "+shelf.getItemCode()+" ItemType: "+shelf.getItem().getType()+" ItemPrice: "+shelf.getItem().getPrice()+" isAvailable: "+!shelf.getIsSold());
            }
     }
 }
+
