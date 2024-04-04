@@ -1,56 +1,67 @@
 package vendingMachine;
 
-import java.util.*;
-
 import coin.Coin;
 import item.Item;
+import java.util.*;
 
 public class VendingMachineState {
-    public void vendingMachineSate(){
-        System.out.println("Idle state");
+    public VendingMachineState() {
+        System.out.println("Currently machine is in Idle state");
     }
-    public void setForSelectingProduct(){
-        System.out.println("Machine has money in it");
+
+    public void clickOnStartProductSelectionButton() {
+        System.out.println("Vending machine is in HasMoneyState");
     }
-    public void insertCoin(Coin coin){
-        System.out.println("Inserted money");
-        System.out.println("Machine has money in it");
+
+    public void insertCoin(VendingMachine vendingMachine, Coin coin) {
+        System.out.println("Vending machine is in HasMoneyState");
+        System.out.println("Accepted the coin");
+        vendingMachine.getCoinList().add(coin);
     }
-    public void selectProduct(VendingMachine vendingMachine,int itemCode){
-        //select itemCode
-        //get coin
-        //compare price and coins
-          Item item=vendingMachine.gInventory().getItem(itemCode);
-           int paidByUser=0;
-            for(Coin coin: vendingMachine.gCoinList()){
-                    paidByUser+=coin.getValue();
-            }if(item.getPrice()>paidByUser){
-                      refundMoney(vendingMachine);
-                      return;
-                }
-             else{
-                getChange(item.getPrice(),paidByUser);
-                dispenseProduct(vendingMachine, itemCode);
-                return;
-             }   
-    }
-    public List<Coin> refundMoney(VendingMachine vendingMachine){
-        System.out.println("Returned the full amount in dispence tray");
-        vendingMachine.sVendingMachineState(new VendingMachineState());
-        return vendingMachine.gCoinList();
-    }
+
+    public List<Coin> refundFullMoney(VendingMachine vendingMachine) {
+        System.out.println("Returned the full amount back in the coin dispense tray");
+        vendingMachine.setVendingMachinState(new VendingMachineState());
+        return vendingMachine.getCoinList();
+    }  
     
-    public void updateInventory(VendingMachine vendingMachine,Item item,int itemCode){
-       vendingMachine.gInventory().addItem(item,itemCode);
+    public void updateInventory(VendingMachine vendingMachine, Item item, int itemCodeNumber) {
+        vendingMachine.getInventory().addItem(item, itemCodeNumber);
+    }
+
+    public void dispenseProduct(VendingMachine vendingMachine, int itemCodeNumber) {
+        System.out.println("Currently vending machine is in Dispense State");
+        System.out.println("Product has been dispensed");
+        vendingMachine.getInventory().updateItemSold(itemCodeNumber);
+        vendingMachine.setVendingMachinState(new VendingMachineState());
+    }
+
+    public void chooseProduct(VendingMachine vendingMachine, int itemCodeNumber) {
+        // 1. Get item for itemCodeNumber
+        // 2. Total amount paid by User
+        // 3. Compare the product and amount paid by the user
+        // 4. Dispense the product
+
+        Item item = vendingMachine.getInventory().getItem(itemCodeNumber);
+
+        int paidByUser = 0;
+        for (Coin coin: vendingMachine.getCoinList()) {
+            paidByUser += coin.getValue();
+        }
+
+        if (item.getPrice() > paidByUser) {
+            refundFullMoney(vendingMachine);
+            return;
+        } else {
+            getChange(item.getPrice(), paidByUser);
+            dispenseProduct(vendingMachine, itemCodeNumber);
+            return;
+        }
 
     }
-    public void dispenseProduct(VendingMachine vendingMachine,int itemCode){
-        System.out.println("machine is in dispense state");
-        System.out.println("Product is dispensed");
-        vendingMachine.gInventory().updateItemSold(itemCode);
-        vendingMachine.sVendingMachineState(new VendingMachineState());
-    }
-    public void getChange(int itemPrice,int paidByUser){
-          System.out.println("Get the change from the dispence tray"+(itemPrice-paidByUser));
-    }
+
+    public void getChange(int itemPrice, int paidByUser) {
+        System.out.println("Returned the change in the Coin Dispense Tray: " + (paidByUser- itemPrice));
+
+    }    
 }
