@@ -1,0 +1,40 @@
+package action;
+
+import java.time.LocalDateTime;
+
+public class Action {
+   private int actionId;
+   private LocalDateTime dateTime;
+   private int lineNo;
+   private String text;
+   private boolean isAddition;
+
+   // also can use constructor insteadof setter functions to st the arguments its actuaaly better
+    public Action(int actionId,LocalDateTime dateTime,int lineNo,String text,boolean isAddition){
+        this.actionId=actionId;
+        this.dateTime=dateTime;
+        this.lineNo=lineNo;
+        this.text=text;
+        this.isAddition=isAddition;
+    }
+   
+    public int getActionId(){
+        return this.actionId;
+    }
+   
+    public LocalDateTime getDateTime(){
+        return this.dateTime;
+    }
+   
+    public int getLineNo(){
+        return this.lineNo;
+    }
+   
+    public String getText(){
+        return this.text;
+    }
+    
+    public boolean getIsAddition(){
+        return this.isAddition;
+    }
+}
