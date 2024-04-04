@@ -1,34 +1,43 @@
 package vendingMachine;
 
-import java.util.List;
 import coin.Coin;
 import inventory.Inventory;
+import java.util.*;
 
 public class VendingMachine {
     private VendingMachineState vendingMachineState;
-    private Inventory inventory;
+    private Inventory inventory; // ItemShelf -> Item, Itemcode, soldout -> price, Itemtype
     private List<Coin> coinList;
-  public VendingMachine(){
-       vendingMachineState=new VendingMachineState;
-       inventory=new Inventory;
-       coinList=new ArrayList<>();
-}
-public void sVendingMachineState(VendingMachineState vendingMachineState){
-      this.vendingMachineState=vendingMachineState;
-  }
-  public VendingMachineState gVendingMachineState(){
-     return this.vendingMachineState;
-  }
-  public void sInventory(Inventory inventory){
-       this.inventory=inventory;
-  }
-  public Inventory gInventory(){
-     return this.inventory;
-  }
-  public void sCoinList(List<Coin> coinList){
-      this.coinList=coinList;
-  }
-  public List<Coin> gCoinList(){
-    return this.coinList;
-  }
+
+    public VendingMachine() {
+        vendingMachineState = new VendingMachineState();
+        inventory = new Inventory(10);
+        coinList = new ArrayList<>();
+    }
+    
+
+    public VendingMachineState getVendingMachineState() {
+        return this.vendingMachineState;
+    }
+
+    public void setVendingMachinState(VendingMachineState vendingMachineState) {
+        this.vendingMachineState = vendingMachineState;
+    }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public List<Coin> getCoinList() {
+        return this.coinList;
+    }
+
+    public void setCoinList(List<Coin> coinList) {
+        this.coinList = coinList;
+    }
+   
 }
