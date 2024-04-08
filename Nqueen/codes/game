@@ -25,10 +25,11 @@ public void play(){
           return; 
      }
      for(int col=0;col<board.n;col++){
-        if(isSafe(board,row,col)==true)
+        if(isSafe(board,row,col)==true){
              matrix[row][col]='Q';
          helpSeeker(board.matrix,row+1);
            matrix[row][col]='-';
+        }
      }
   }
 
