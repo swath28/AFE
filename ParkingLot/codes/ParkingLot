@@ -1,0 +1,82 @@
+import java.util.*;
+public class ParkingLot {
+     int largeSpotSizes;
+     int compactSpotSizes;
+     int bikeSpotSizes;
+       List<ParkingSpot> secondFloor;
+       List<ParkingSpot> firstFloor;
+       List<ParkingSpot> groundFloor;
+       public ParkingLot(int largeSpotSizes,int compactSpotSizes,int bikeSpotSizes){
+           this.largeSpotSizes=largeSpotSizes;
+           this.compactSpotSizes=compactSpotSizes;
+           this.bikeSpotSizes=bikeSpotSizes;
+           secondFloor=new ArrayList<>();
+           firstFloor=new ArrayList<>();
+           groundFloor=new ArrayList<>();
+       }
+           public void parkTheVehicle(Vehicle vehicle){
+              System.out.println("We are parking the vehicle "+vehicle.getVehicleType());
+                 if(VehicleType.TRUCK.equals(vehicle.getVehicleType())){
+                    if(largeSpotSizes>0){
+                        parkLargeVehicle(vehicle); 
+                    }else{
+                      System.out.println("Large parking spot not available");
+                    }
+                 }else if(VehicleType.CAR.equals(vehicle.getVehicleType())){
+                    if(compactSpotSizes>0){
+                        parkCompactVehicle(vehicle);
+                    }else{
+                        System.out.println("Compact parking spot not available");
+                    }
+                 }else if(VehicleType.BIKE.equals(vehicle.getVehicleType())){
+                    if(bikeSpotSizes>0){
+                       parkBikeVehicle(vehicle);
+                    }else{
+                        System.out.println("Bike parking spot not available");
+                    }
+                 }else{
+                  System.out.println("Parking not available");
+                 }
+           }
+           private void parkLargeVehicle(Vehicle vehicle){
+                ParkingSpot largeParkingSpot=new ParkingSpot(ParkingSpotType.LARGE);
+                largeParkingSpot.setIsFree(false);
+                largeParkingSpot.setVehicle(vehicle);
+                vehicle.setParkingSpot(largeParkingSpot);
+                secondFloor.add(largeParkingSpot);
+                largeSpotSizes--;
+                System.out.println("Truck is parked successfully");
+           }
+           private void parkCompactVehicle(Vehicle vehicle){
+                ParkingSpot compactParkingSpot=new ParkingSpot(ParkingSpotType.COMPACT);
+                compactParkingSpot.setIsFree(false);  
+                compactParkingSpot.setVehicle(vehicle);
+                vehicle.setParkingSpot(compactParkingSpot);
+                firstFloor.add(compactParkingSpot);
+                compactSpotSizes--;
+                System.out.println("Car is parked successfully");
+           }
+           private void parkBikeVehicle(Vehicle vehicle){
+               ParkingSpot bikeParkingSpot=new ParkingSpot(ParkingSpotType.BIKE);
+               bikeParkingSpot.setIsFree(false);
+               bikeParkingSpot.setVehicle(vehicle);
+               vehicle.setParkingSpot(bikeParkingSpot);
+               groundFloor.add(bikeParkingSpot);
+               bikeSpotSizes--;
+               System.out.println("Bike is parked successfully");
+           }
+          public void unparkingTheVehicle(Vehicle vehicle){
+            System.out.println("We are unparking the vehicle"+vehicle.getVehicleType());
+             ParkingSpot parkingSpot=vehicle.getParkingSpot();
+             parkingSpot.setIsFree(true);
+              if(VehicleType.TRUCK.equals(vehicle.getVehicleType())){
+                 bikeSpotSizes++;
+              }else if(VehicleType.CAR.equals(vehicle.getVehicleType())){
+                 compactSpotSizes++;
+              }else{
+                largeSpotSizes++;
+              }
+                System.out.println("Vehicle unparked successfully");
+          }
+    }
+
